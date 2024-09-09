@@ -40,6 +40,17 @@ export class Joueur {
         return this._nbLancersGagnes;
     }
 
+    /**
+     * Retourne le ratio de succès.
+     * @return Le ratio, ou 0 si aucun lancer n'a été effectué
+     */
+    get ratio(): number {
+        if (this._nbLancers === 0) {
+            return 0; 
+        }
+        return this._nbLancersGagnes / this._nbLancers;
+    }
+
     public lancer() {
         this._nbLancers++;
     }
@@ -52,7 +63,8 @@ export class Joueur {
         return {
             nom: this.nom,
             lancers: this.lancers,
-            lancersGagnes: this.lancersGagnes
+            lancersGagnes: this.lancersGagnes,
+            ratio: this.ratio 
         };
     }
 }
