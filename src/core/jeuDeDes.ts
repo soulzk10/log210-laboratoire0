@@ -2,6 +2,7 @@ import { De } from "./de";
 import { Joueur } from "./joueur";
 import { NotFoundError } from "./errors/notFoundError";
 import { AlreadyExistsError } from "./errors/alreadyExistsError";
+import { InvalidParameterError } from "./errors/invalidParameterError";
 
 export class JeuDeDes {
     // classe contrôleur GRASP, car JeuDeDes est un objet racine dans le MDD
@@ -22,7 +23,6 @@ export class JeuDeDes {
      */
 
     public demarrerJeu(nom: string): string {
-
         if (this._joueurs.get(nom)) {
             throw new AlreadyExistsError(`Joueur '${nom}' existe déjà.`);
         }
@@ -38,7 +38,7 @@ export class JeuDeDes {
         if (!joueur) {
             throw new NotFoundError(`Joueur '${nom}' n'existe pas.`);
         }
-        const somme = this.brasser()
+        const somme = this.brasser();
         joueur.lancer();
         const gagne = somme === 7;
         if (gagne) joueur.gagner();
@@ -68,6 +68,14 @@ export class JeuDeDes {
         return JSON.stringify(resultat);
     }
 
+    /**
+     * Réinitialise les joueurs en vidant la liste des joueurs.
+     * Conformément au diagramme de séquence RDCU.
+     */
+    public redemarrerJeu(): void {
+        this._joueurs.clear(); // Réinitialise la collection des joueurs
+    }
+
     // d'autres méthodes (des RDCU)
     brasser() {
         this._d1.brasser();
@@ -81,5 +89,4 @@ export class JeuDeDes {
     public get joueurs() {
         return JSON.stringify(Array.from(this._joueurs.values()));
     }
-
 }

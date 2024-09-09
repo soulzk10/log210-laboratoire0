@@ -1,0 +1,11 @@
+@startuml dss-redemarrerJeu
+skinparam style strictuml
+skinparam backgroundcolor transparent
+skinparam SequenceBoxBorderColor transparent
+skinparam participantpadding 10
+'skinparam handwritten true
+skinparam sequenceMessageAlign center
+actor ":Joueur" as j
+participant ":Systeme" as s 
+j -> s : redemarrerJeu()
+@enduml
