@@ -48,10 +48,13 @@ class App {
     router.get('/stats', (req, res, next) => {
       const joueurs: Array<Joueur> = JSON.parse(jeuRoutes.controleurJeu.joueurs);
       // Calculer le ratio et créer un nouveau tableau
-      const joueursAvecRatio = joueurs.map(joueur => ({
-        ...joueur,
-        ratio: joueur.ratio // Calculer le ratio pour chaque joueur
-      }));
+      const joueursAvecRatio = joueurs.map(joueur => {
+        const ratio = joueur.lancers > 0 ? joueur.lancersGagnes / joueur.lancers : 0;
+        return {
+          ...joueur,
+          ratio: ratio
+        };
+      });
       // Trier le tableau par ratio décroissant
       joueursAvecRatio.sort((a, b) => (b.ratio || 0) - (a.ratio || 0));
       res.render('stats',

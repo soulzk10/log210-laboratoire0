@@ -19,7 +19,7 @@ export class JeuDeDes {
     }
 
     /**
-     *  opérations systèmes (du DSS), responsabilités données aux contrôleur GRASP
+     *  opérations systèmes (du DSS), responsabilités données au contrôleur GRASP
      */
 
     public demarrerJeu(nom: string): string {
@@ -72,8 +72,9 @@ export class JeuDeDes {
      * Réinitialise les joueurs en vidant la liste des joueurs.
      * Conformément au diagramme de séquence RDCU.
      */
-    public redemarrerJeu(): void {
-        this._joueurs.clear(); // Réinitialise la collection des joueurs
+    public redemarrerJeu(): string {
+        this._joueurs.clear(); 
+        return JSON.stringify({ message: "Le jeu a été redémarré avec succès." });
     }
 
     // d'autres méthodes (des RDCU)

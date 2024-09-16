@@ -1,31 +1,27 @@
 import request from 'supertest';
-import app from '../../../src/app'; // Assure-toi que c'est le bon chemin vers ton application Express
-import { ajouterJoueur, viderJoueurs, obtenirJoueurs } from '../../../src/core/joueurStore'; // Adapté au stockage en mémoire
-import 'jest-extended';
+import app from '../../../src/app';  
 
 describe('GET /api/v1/jeu/redemarrerJeu', () => {
-  beforeAll(() => {
-    ajouterJoueur('Joueur 1');
-    ajouterJoueur('Joueur 2');
+
+  // Création de deux joueurs avant l'exécution de tous les tests
+  beforeAll(async () => {
+    await request(app).post('/api/v1/joueurs').send({ nom: 'Joueur 1' });
+    await request(app).post('/api/v1/joueurs').send({ nom: 'Joueur 2' });
   });
 
-  afterAll(() => {
-    viderJoueurs();
-  });
-
-  it('should successfully restart the game and return status 200 with JSON response', async () => {
-    const response = await request(app)
-      .get('/api/v1/jeu/redemarrerJeu')
-      .set('Accept', 'application/json');
-
+  // Test du scénario principal: redémarrer le jeu avec succès
+  it('devrait redémarrer le jeu avec succès et retourner un code 200', async () => {
+    const response = await request(app).get('/api/v1/jeu/redemarrerJeu');
     expect(response.status).toBe(200);
     expect(response.headers['content-type']).toMatch(/json/);
   });
 
-  it('should clear all players after the game is restarted', async () => {
-    await request(app).get('/api/v1/jeu/redemarrerJeu');
-
-    const joueurs = obtenirJoueurs();
-    expect(joueurs).toBeEmpty();
+  // Test de la postcondition : vérifier qu'il n'y a plus de joueurs après redémarrage
+  it('devrait ne plus y avoir de joueurs après le redémarrage', async () => {
+    const joueursResponse = await request(app).get('/api/v1/joueurs');
+    expect(joueursResponse.status).toBe(200);  
+    expect(joueursResponse.body.length).toBe(0);  
   });
+  
+
 });

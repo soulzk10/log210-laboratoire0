@@ -1,7 +1,7 @@
 import { InvalidParameterError } from './errors/invalidParameterError';
 
 export class Joueur {
-    // classe inspirée de la classe conceptuelle (du MDD)
+    // Classe inspirée de la classe conceptuelle (du MDD)
     private _nom: string;
     private _nbLancers: number;
     private _nbLancersGagnes: number;
@@ -60,11 +60,11 @@ export class Joueur {
     }
 
     public toJSON() {
+        // Exclure le ratio du JSON retourné pour correspondre aux attentes des tests
         return {
             nom: this.nom,
             lancers: this.lancers,
-            lancersGagnes: this.lancersGagnes,
-            ratio: this.ratio 
+            lancersGagnes: this.lancersGagnes
         };
     }
 }

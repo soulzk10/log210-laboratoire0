@@ -96,11 +96,21 @@ export class JeuRouter {
   public redemarrerJeu(req: Request, res: Response, next: NextFunction) {
     try {
       this._controleurJeu.redemarrerJeu();
-      req.flash('info', `Le jeu a été redémarré.`);
+      req.flash('info', `Le jeu a été redémarré.`);  
       res.status(200).send({
         message: 'Success',
         status: res.status
       });
+    } catch (error) {
+      this._errorCode500(error, req, res);
+    }
+  }
+
+  //Recuperer joueurs
+  public obtenirJoueurs(req: Request, res: Response, next: NextFunction) {
+    try {
+      const joueurs = JSON.parse(this._controleurJeu.joueurs); 
+      res.status(200).json(joueurs);
     } catch (error) {
       this._errorCode500(error, req, res);
     }
@@ -122,7 +132,8 @@ export class JeuRouter {
     this._router.post('/demarrerJeu', this.demarrerJeu.bind(this));
     this._router.get('/jouer/:nom', this.jouer.bind(this));
     this._router.get('/terminerJeu/:nom', this.terminerJeu.bind(this));
-    this._router.get('/redemarrerJeu', this.redemarrerJeu.bind(this)); 
+    this._router.get('/redemarrerJeu', this.redemarrerJeu.bind(this));  
+    this._router.get('/joueurs', this.obtenirJoueurs.bind(this));  
   }
 }
 

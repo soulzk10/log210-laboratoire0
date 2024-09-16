@@ -205,3 +205,8 @@ Pour un lancer, si le total est égal à sept, le Joueur a gagné. Dans tous les
 - L'instance j de Joueur a été supprimée sur une base de correspondance avec nom
 ![Diagramme de séquence, terminerJeu](modeles/rdcu-terminerJeu.svg)
 
+## Diagramme de classes logicielles
+
+Voici le diagramme de classes logicielles du projet. Ce diagramme montre les principales classes du système et leurs relations.
+
+![Diagramme de Classes](docs/modeles/App.svg)
